@@ -3,10 +3,11 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class Brapp < OmniAuth::Strategies::OAuth2
+      option :name, :brapp
+
       option :client_options, {
-        :site => 'https://api.github.com',
-        :authorize_url => 'https://github.com/login/oauth/authorize',
-        :token_url => 'https://github.com/login/oauth/access_token'
+        :site => 'https://api.brappmusic.com',
+        :authorize_url => '/oauth/authorize'
       }
 
       def request_phase
@@ -27,47 +28,15 @@ module OmniAuth
 
       info do
         {
-          'nickname' => raw_info['login'],
-          'email' => email,
-          'name' => raw_info['name'],
-          'image' => raw_info['avatar_url'],
-          'urls' => {
-            'Brapp' => raw_info['html_url'],
-            'Blog' => raw_info['blog'],
-          },
+          'username' => raw_info['username'],
+          'email' => raw_info['email'],
+          'full_name' => raw_info['full_name'],
+          'admin' => raw_info['admin']
         }
       end
 
-      extra do
-        {:raw_info => raw_info}
-      end
-
       def raw_info
-        access_token.options[:mode] = :query
-        @raw_info ||= access_token.get('user').parsed
-      end
-
-      def email
-        (email_access_allowed?) ? primary_email : raw_info['email']
-      end
-
-      def primary_email
-        primary = emails.find{|i| i['primary'] }
-        primary && primary['email'] || emails.first && emails.first['email']
-      end
-
-      # The new /user/emails API - http://developer.github.com/v3/users/emails/#future-response
-      def emails
-        return [] unless email_access_allowed?
-        access_token.options[:mode] = :query
-        @emails ||= access_token.get('user/emails', :headers => { 'Accept' => 'application/vnd.github.v3' }).parsed
-      end
-
-      def email_access_allowed?
-        return false unless options['scope']
-        email_scopes = ['user', 'user:email']
-        scopes = options['scope'].split(',')
-        (scopes & email_scopes).any?
+        @raw_info ||= access_token.get('/api/v1/me.json').parsed
       end
     end
   end
