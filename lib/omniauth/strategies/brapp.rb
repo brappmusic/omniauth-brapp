@@ -2,7 +2,7 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class GitHub < OmniAuth::Strategies::OAuth2
+    class Brapp < OmniAuth::Strategies::OAuth2
       option :client_options, {
         :site => 'https://api.github.com',
         :authorize_url => 'https://github.com/login/oauth/authorize',
@@ -32,7 +32,7 @@ module OmniAuth
           'name' => raw_info['name'],
           'image' => raw_info['avatar_url'],
           'urls' => {
-            'GitHub' => raw_info['html_url'],
+            'Brapp' => raw_info['html_url'],
             'Blog' => raw_info['blog'],
           },
         }
@@ -73,4 +73,4 @@ module OmniAuth
   end
 end
 
-OmniAuth.config.add_camelization 'github', 'GitHub'
+OmniAuth.config.add_camelization 'github', 'Brapp'
