@@ -4,6 +4,7 @@ source 'http://rubygems.org'
 gemspec
 
 group :development, :test do
+gem 'byebug'
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
