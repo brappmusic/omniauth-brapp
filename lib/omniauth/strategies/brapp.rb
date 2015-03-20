@@ -24,19 +24,25 @@ module OmniAuth
         end
       end
 
-      uid { raw_info['id'].to_s }
+      uid { raw_info['data']['id'].to_s }
 
       info do
         {
-          'username' => raw_info['username'],
-          'email' => raw_info['email'],
-          'full_name' => raw_info['full_name'],
-          'admin' => raw_info['admin']
+          'name' => raw_info['data']['full_name'],
+          'email' => raw_info['data']['email'],
+          'full_name' => raw_info['data']['full_name'],
+          'nickname' => raw_info['data']['username']
+        }
+      end
+
+      extra do
+        {
+          'admin' => raw_info['data']['admin']
         }
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/api/v1/me.json').parsed
+        @raw_info ||= access_token.get('/api/v1/users/me.json').parsed
       end
     end
   end
