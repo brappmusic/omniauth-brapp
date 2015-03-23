@@ -4,8 +4,8 @@ require File.expand_path('../lib/omniauth-brapp/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Levent Ali"]
   gem.email         = ["levent@purebreeze.com"]
-  gem.description   = %q{Official OmniAuth strategy for Brapp.}
-  gem.summary       = %q{Official OmniAuth strategy for Brapp.}
+  gem.description   = %q{OmniAuth strategy for Brapp.}
+  gem.summary       = %q{OmniAuth strategy for Brapp.}
   gem.homepage      = "https://github.com/brappmusic/omniauth-brapp"
   gem.license       = "MIT"
 
@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   # http://www.rubysec.com/advisories/CVE-2012-6134/
   gem.add_dependency 'omniauth-oauth2', '>= 1.1.1', '< 2.0'
   gem.add_development_dependency 'rspec', '~> 2.7'
-  gem.add_development_dependency 'rack-test'
-  gem.add_development_dependency 'simplecov'
-  gem.add_development_dependency 'webmock'
+  gem.add_development_dependency 'rack-test', '~> 0.6.3'
+  gem.add_development_dependency 'simplecov', '~> 0.9.2'
+  gem.add_development_dependency 'webmock', '~> 1.20'
 end
